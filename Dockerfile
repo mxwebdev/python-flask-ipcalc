@@ -1,10 +1,22 @@
-FROM tiangolo/uwsgi-nginx-flask:python3.6-alpine3.7
+FROM python:3-alpine
 
-RUN apk --update add bash nano
+RUN adduser -D ipcalcflask
 
-ENV STATIC_URL /static
-ENV STATIC_PATH /var/www/app/static
+WORKDIR /home/ipcalcflask
 
-COPY ./requirements.txt /var/www/requirements.txt
+COPY requirements.txt requirements.txt
+RUN python -m venv venv
+RUN venv/bin/pip install -r requirements.txt
+RUN venv/bin/pip install gunicorn
 
-RUN pip install -r /var/www/requirements.txt
+COPY app app
+COPY main.py start.sh ./
+RUN chmod +x start.sh
+
+ENV FLASK_APP main.py
+
+RUN chown -R ipcalcflask:ipcalcflask ./
+USER ipcalcflask
+
+EXPOSE 5000
+ENTRYPOINT ["./start.sh"]
