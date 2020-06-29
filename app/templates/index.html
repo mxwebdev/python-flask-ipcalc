@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1 class="block uppercase tracking-wide text-xl text-gray-700 font-bold mb-4" for="subnetsInput">IP Subnet
+    Calculator</h1>
+
+<!-- Error Messages -->
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+    <strong class="font-bold">Something went wrong.</strong>
+    <span class="block sm:inline">
+        {% for message in messages %}
+        {{ message[1] }}
+        {% endfor %}
+    </span>
+
+</div>
+
+{% endif %}
+{% endwith %}
+
+<!-- END Error Messages-->
+
+<!-- Input Form -->
+
+<form action="" method="post">
+    {{ form.csrf }}
+
+    <label class="block uppercase tracking-wide text-gray-700 font-bold mb-2" for="subnetsInput">Subnet(s)</label>
+    <p class="text-gray-600 text-sm italic">Please enter subnet(s) in CIDR notation (e.g. 192.168.1.0/28).</p>
+
+    {{ form.subnetsInput(class="appearance-none block w-full h-64 bg-gray-200 text-gray-700 border rounded p-3 mb-4 leading-tight focus:outline-none focus:bg-gray-100") }}
+
+    {{ form.removeLastOctet(class="mr-2 mb-4 leading-tight") }}
+
+    <span>
+        Remove the last IP octet to shorten the output
+    </span>
+
+    <input class=" w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit"
+        value="Calculate">
+
+</form>
+
+<!-- END Input Form -->
+
+<!-- Output -->
+
+{% if ipList %}
+
+<h2 class="block uppercase tracking-wide text-gray-700 font-bold mt-10 mb-2" for="subnetsInput">Output</h2>
+
+<ul>
+    {% for ip in ipList %}
+    <li>{{ ip }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}
+
+<!-- END Output -->
