@@ -1,18 +1,28 @@
-version: "3"
+version: "3.7"
 
 services:
-    app:
-        image: ipcalcflask:latest
-        ports:
-            - "80:5000"
+
+    flask:
+        build: ./flask
+        container_name: flask
+        restart: unless-stopped
+        expose:
+            - 8080
+
+    nginx:
+        build: ./nginx
+        container_name: nginx
+        restart: unless-stopped
+        #ports:
+        #    - "80:80"
         expose:
             - 80
             - 443
         environment:
-            VIRTUAL_HOST: ipcalculator.mxwebapps.de
-            LETSENCRYPT_HOST: ipcalculator.mxwebapps.de
-            LETSENCRYPT_EMAIL: info@mxwebapps.de
-            
+            VIRTUAL_HOST: example.com
+            LETSENCRYPT_HOST: example.com
+            LETSENCRYPT_EMAIL: example@example.com
+
 networks:
     default:
         external:

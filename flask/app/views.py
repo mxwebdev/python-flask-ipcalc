@@ -1,9 +1,9 @@
+from app import app
+
 from flask import render_template, flash, request
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField, BooleanField
 import ipaddress
 from ordered_set import OrderedSet
-
-from app import app
 
 separator = "."
 
