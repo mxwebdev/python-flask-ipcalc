@@ -10,7 +10,8 @@ RUN venv/bin/pip install -r requirements.txt
 RUN venv/bin/pip install gunicorn
 
 COPY app app
-COPY main.py start.sh ./
+COPY instance instance
+COPY main.py config.py start.sh ./
 RUN chmod +x start.sh
 
 ENV FLASK_APP main.py
