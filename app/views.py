@@ -21,10 +21,7 @@ def index():
     if request.method == 'POST':
         subnetsInput=request.form['subnetsInput']
 
-        #if form.removeLastOctet.data:
         ipList = OrderedSet()
-        #else:
-        #    ipList = list()
 
         if subnetsInput is not None:
             subnetList = subnetsInput.split()
@@ -52,9 +49,6 @@ def index():
 
                     elif ipCount <= 10000:
                         for ip in ipaddress.IPv4Network(subnet):
-                        
-                            # Return 4 octets
-                            #ipList.append(ip)
                             ipList.add(ip)
                     else:
                         flash('The count of IPs resulting from your input would be too high (max. 10.000). Consider removing the last octet by clicking on the checkbox below to shorten your output.')
